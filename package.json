@@ -8,8 +8,8 @@
     "build:assets": "WEBPACK_ENV=production webpack --config src/webpack.config.js",
 		"build:server": "babel src --out-dir build --ignore 'src/assets','src/static','src/webpack.config.js'",
 		"prebuild": "rm -rf build",
-    "build": "npm run build:server && npm run build:assets && cp -R src/static build && cp -R src/views build",
-    "start": "node build/server.js"
+    "build": "npm run build:server",
+    "start": "npm run build:server && PRODUCTION=true node build/server.js"
   },
   "dependencies": {
     "@babel/cli": "^7.5.5",
