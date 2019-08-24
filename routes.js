@@ -8,7 +8,7 @@ const UPLOAD = "/upload";
 const SEARCH = '/search/:searchTerm';
 const BOARDLIST = "/list";
 const BOARDDETAIL = "/:id";
-const BOARDDELETE = "/delete/:id";
+const BOARDDELETE = "/:id";
 const BOARDUPDATE = "/:id";
 const UPLOADIMAGES = '/images';
 

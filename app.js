@@ -14,7 +14,7 @@ dotenv.config();
 const app = express();
 app.use(helmet());
 app.use(morgan("dev"));
-app.use('/', express.static('uploads'));
+// app.use('/', express.static('uploads'));
 app.use(cors({
     origin: true,
     credentials: true

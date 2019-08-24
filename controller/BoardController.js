@@ -50,11 +50,10 @@ export const searchBoard = async (req, res) => {
 
 export const getList = async (req, res) => {
   const boards = await Board.find({}).populate('images');
-  res.send(boards);
+  return res.status(200).json(boards);
 };
 
 export const getDetail = async (req, res) => {
-  console.log('detail')
   const {
     params: { id }
   } = req;

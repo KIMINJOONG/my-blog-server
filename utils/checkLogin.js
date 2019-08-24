@@ -1,8 +1,7 @@
 import decodeJWT from "./decodeJWT";
 
 export const isLoggedIn = async(req, res, next) => {
-    const token = req.headers['token'];
-    console.log('token : ', token);
+    const token = req.headers.cookie ? req.headers.cookie.split('=')[1] : ''
     if(token) {
         const user = await decodeJWT(token);
         if(user){
