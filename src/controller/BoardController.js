@@ -84,3 +84,27 @@ export const boardUpdate = async (req, res) => {
 export const uploadImages = (req, res) => {
     return res.json(req.files.map(v => v.filename));
 }
+
+// Add Comment
+export const postAddComment = async(req,res) => {
+  const {
+      params : {id},
+      body: {comment},
+      user
+  } = req;
+  try {
+      const board = await Board.findById(id);
+      const newComment = await Comment.create({
+          text: comment,
+          creator: user.id
+      });
+      board.comments.push(newComment.id);
+      board.save();
+
+  }catch(error) {
+      res.status(400);
+  }finally {
+      res.end();
+  }
+};
+
