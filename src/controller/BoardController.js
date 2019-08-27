@@ -9,6 +9,7 @@ export const postUpload = async (req, res) => {
     body: {
       title,
       content,
+      category,
       fileUrl
     },
   } = req;
@@ -16,6 +17,7 @@ export const postUpload = async (req, res) => {
     const newBoard = await Board.create({
       title,
       content,
+      category,
     });
     if(fileUrl){
       if(Array.isArray(fileUrl)){
@@ -72,9 +74,9 @@ export const boardDelete = async (req, res) => {
 export const boardUpdate = async (req, res) => {
   const {
     params: { id },
-    body: { title, content }
+    body: { title, content, category }
   } = req;
-  await Board.findOneAndUpdate({ _id: id }, { title, content });
+  await Board.findOneAndUpdate({ _id: id }, { title, content,  category });
   res.status(200).json("success");
 };
 
