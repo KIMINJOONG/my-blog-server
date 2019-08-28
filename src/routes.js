@@ -1,6 +1,8 @@
 // Home
 const HOME = '/';
 
+
+
 // Board
 
 const BOARD = "/board";
@@ -11,6 +13,7 @@ const BOARDDETAIL = "/:id";
 const BOARDDELETE = "/:id";
 const BOARDUPDATE = "/:id";
 const UPLOADIMAGES = '/images';
+const COMMENT = '/:id/comment';
 
 // USER
 const USER = "/user";
@@ -33,7 +36,8 @@ const routes = {
   userLogin: USERLOGIN,
   userLogout: USERLOGOUT,
   loadUser: LOADUSER,
-  home: HOME
+  home: HOME,
+  comment: COMMENT
 };
 
 export default routes;

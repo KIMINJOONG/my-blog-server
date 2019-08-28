@@ -7,4 +7,5 @@ const homeRouter = express.Router();
 
 homeRouter.get(routes.home, isLoggedIn ,loadUser);
 
+
 export default homeRouter;

@@ -1,5 +1,6 @@
 import Board from "../models/Board";
 import Image from "../models/Image";
+import Comment from "../models/Comment";
 
 
 
@@ -88,11 +89,12 @@ export const uploadImages = (req, res) => {
 // Add Comment
 export const postAddComment = async(req,res) => {
   const {
-      params : {id},
-      body: {comment},
+      params : { id },
+      body: { comment },
       user
   } = req;
   try {
+
       const board = await Board.findById(id);
       const newComment = await Comment.create({
           text: comment,
@@ -102,6 +104,7 @@ export const postAddComment = async(req,res) => {
       board.save();
 
   }catch(error) {
+    console.log(error);
       res.status(400);
   }finally {
       res.end();
