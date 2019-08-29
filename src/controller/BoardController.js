@@ -98,16 +98,14 @@ export const postAddComment = async(req,res) => {
       const board = await Board.findById(id);
       const newComment = await Comment.create({
           text: comment,
-          creator: user.id
+          creator: user._id
       });
       board.comments.push(newComment.id);
       board.save();
-
+      return res.status(200).json(board);
   }catch(error) {
     console.log(error);
-      res.status(400);
-  }finally {
-      res.end();
+      return res.status(400);
   }
 };
 
