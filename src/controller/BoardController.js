@@ -60,8 +60,18 @@ export const getDetail = async (req, res) => {
   const {
     params: { id }
   } = req;
-  const boardDetail = await Board.findById(id).populate('images');
-  res.status(200).json(boardDetail);
+  const boardDetail = await Board.findById(id).populate('images').populate([
+    {
+      path: 'comments',
+      populate: [{
+        path: 'creator',
+        model: 'User',
+        select: ['id']
+      }]
+    },
+  ]);
+
+  return res.status(200).json(boardDetail);
 };
 
 export const boardDelete = async (req, res) => {
@@ -98,11 +108,21 @@ export const postAddComment = async(req,res) => {
       const board = await Board.findById(id);
       const newComment = await Comment.create({
           text: comment,
-          creator: user._id
+          creator: user._id,
       });
-      board.comments.push(newComment.id);
-      board.save();
-      return res.status(200).json(board);
+      board.comments.push(newComment._id);
+      await board.save();
+      const boardDetail = await Board.findById(id).populate('images').populate([
+        {
+          path: 'comments',
+          populate: [{
+            path: 'creator',
+            model: 'User',
+            select: ['id']
+          }]
+        },
+      ]);
+      return res.status(200).json(boardDetail);
   }catch(error) {
     console.log(error);
       return res.status(400);
