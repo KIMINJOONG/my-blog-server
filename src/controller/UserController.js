@@ -38,6 +38,7 @@ export const postLogin = async (req, res) => {
   if (isLogin) {
     const token = createJWT(user.id);
     res.cookie("token", token);
+    res.cookie('token', token, { expires: new Date(Date.now() + 900000) });
     const filteredUser = Object.assign({}, user.toJSON());
     delete filteredUser.password;
     return res.status(200).json(filteredUser);

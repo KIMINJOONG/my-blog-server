@@ -15,6 +15,8 @@ const app = express();
 app.use(helmet());
 app.use(morgan("dev"));
 // app.use('/', express.static('uploads'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     origin: true,
     credentials: true
@@ -29,10 +31,10 @@ app.use(
         httpOnly: true,
         secure: false //https를 쓸때 true
       },
+      name: 'test'
     })
   );
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.use(routes.home, homeRouter);
 app.use(routes.board, boardRouter);
