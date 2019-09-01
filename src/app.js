@@ -31,7 +31,6 @@ app.use(
         httpOnly: true,
         secure: false //https를 쓸때 true
       },
-      name: 'test'
     })
   );
 
