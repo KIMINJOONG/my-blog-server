@@ -7,7 +7,7 @@ const HOME = '/';
 
 const BOARD = "/board";
 const UPLOAD = "/upload";
-const SEARCH = '/search/:searchTerm';
+const SEARCH = '/list/:searchTerm';
 const BOARDLIST = "/list";
 const BOARDDETAIL = "/:id";
 const BOARDDELETE = "/:id";

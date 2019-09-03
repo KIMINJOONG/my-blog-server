@@ -47,7 +47,7 @@ export const searchBoard = async (req, res) => {
   const {
     params: {searchTerm}
   } = req;
-  const boards = await Board.find({ title : searchTerm});
+  const boards = await Board.find({ title : { $regex: '.*' + searchTerm + '.*'}});
   res.status(200).json(boards);
 }
 
