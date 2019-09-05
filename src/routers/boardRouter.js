@@ -30,7 +30,6 @@ const upload = multer({
 });
 
 boardRouter.post(routes.upload, postUpload);
-boardRouter.get(routes.search, searchBoard)
 boardRouter.get(routes.boardList, getList);
 boardRouter.get(routes.boardDetail, getDetail);
 boardRouter.delete(routes.boardDelete, boardDelete);

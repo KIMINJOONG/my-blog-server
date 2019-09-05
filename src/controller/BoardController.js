@@ -43,16 +43,15 @@ export const postUpload = async (req, res) => {
   }
 };
 
-export const searchBoard = async (req, res) => {
-  const {
-    params: {searchTerm}
-  } = req;
-  const boards = await Board.find({ title : { $regex: '.*' + searchTerm + '.*'}});
-  res.status(200).json(boards);
-}
 
 export const getList = async (req, res) => {
-  const boards = await Board.find({}).populate('images');
+  const { query : { searchValue } } = req;
+  let boards = '';
+  if(searchValue) {
+    boards = await Board.find({ title: { $regex: '.*' + searchValue + '.*' } });
+  } else {
+    boards = await Board.find({});
+  }
   return res.status(200).json(boards);
 };
 
