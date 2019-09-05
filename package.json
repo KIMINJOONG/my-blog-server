@@ -10,7 +10,7 @@
     "prebuild": "rm -rf build",
     "build": "npm run build:server",
     "start": "npm run build:server && PRODUCTION=true forever start build/server.js",
-    "real:server": "npm run build:server && node build/server.js"
+    "real:server": "npm run build:server && PRODUCTION=true node build/server.js"
   },
   "dependencies": {
     "@babel/cli": "^7.5.5",
