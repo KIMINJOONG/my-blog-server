@@ -5,9 +5,9 @@ const HOME = '/';
 
 // Board
 
-const BOARD = "/board";
-const UPLOAD = "/upload";
-const BOARDLIST = "/list";
+const BOARD = "/boards";
+const UPLOAD = "/";
+const BOARDLIST = "/";
 const BOARDDETAIL = "/:id";
 const BOARDDELETE = "/:id";
 const BOARDUPDATE = "/:id";
@@ -16,7 +16,7 @@ const COMMENT = '/:id/comment';
 
 // USER
 const USER = "/user";
-const USERJOIN = "/join";
+const USERJOIN = "/";
 const USERLOGIN = "/login";
 const USERLOGOUT = '/logout';
 const LOADUSER = '/detail';
