@@ -5,6 +5,7 @@ import Comment from "../models/Comment";
 
 
 
+
 export const postUpload = async (req, res) => {
   const {
     body: {
@@ -47,11 +48,9 @@ export const postUpload = async (req, res) => {
 export const getList = async (req, res) => {
   const { query } = req;
   if(query.searchValue === 'undefined' || query.searchValue === '') {
-    console.log('if');
     const boards = await Board.find({});
     return res.status(200).json(boards);
   }
-  console.log('else');
   const boards = await Board.find({ title: { $regex: '.*' + query.searchValue + '.*' } });
   return res.status(200).json(boards);
 };
