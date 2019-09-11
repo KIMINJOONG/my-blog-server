@@ -10,7 +10,12 @@ import dotenv from "dotenv";
 import expressSession from "express-session";
 import cookieParser from "cookie-parser";
 import homeRouter from "./routers/homeRouter";
+import passportConfig from './passport';
+import passport from 'passport';
+
+
 dotenv.config();
+passportConfig();
 const app = express();
 app.use(helmet());
 app.use(morgan("dev"));
@@ -33,7 +38,8 @@ app.use(
       },
     })
   );
-
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(routes.home, homeRouter);
 app.use(routes.board, boardRouter);
