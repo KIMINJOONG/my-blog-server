@@ -7,7 +7,8 @@ import {
   boardDelete,
   boardUpdate,
   uploadImages,
-  postAddComment
+  postAddComment,
+  removeImage
 } from "../controller/BoardController";
 import { isLoggedIn } from "../utils/checkLogin";
 import multer from 'multer';
@@ -34,8 +35,9 @@ boardRouter.post(routes.upload, multerImages.none(), postUpload);
 boardRouter.get(routes.boardList, getList);
 boardRouter.get(routes.boardDetail, getDetail);
 boardRouter.delete(routes.boardDelete, boardDelete);
+boardRouter.delete(routes.removeImage, removeImage);
 boardRouter.put(routes.boardUpdate, boardUpdate);
-boardRouter.post(routes.uploadImages, multerImages.array('image') ,uploadImages);
+boardRouter.post(routes.images, multerImages.array('image') ,uploadImages);
 boardRouter.post(routes.comment, isLoggedIn, postAddComment);
 
 export default boardRouter;

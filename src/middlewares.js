@@ -24,3 +24,15 @@ export const multerVideos = multer({
         bucket: "kohubi-blog/videos"
     })
 });
+
+export const removeMulterImage = (param) => {
+    s3.deleteObject(param, (err, data) => {
+        if(err) {
+            console.log(err);
+            return err;
+        } else {
+            console.log(data);
+            return data;
+        }
+    });
+}

@@ -1,6 +1,7 @@
 import Board from "../models/Board";
 import Image from "../models/Image";
 import Comment from "../models/Comment";
+import { deleteImages, removeMulterImage } from "../middlewares";
 
 
 
@@ -84,6 +85,11 @@ export const boardDelete = async (req, res) => {
   try {
     const fullBoard = await Board.findById(id).populate('images');
     await Board.findOneAndRemove({ _id : id });
+    // const param = {
+    //   Bucket: 'kohubi-blog/images',
+    //   Key: 'filename'
+    // };
+    // deleteImages()
     fullBoard.images.map( async image => {
       await Image.findOneAndRemove({ _id : image.id })
     });
@@ -115,6 +121,18 @@ export const boardUpdate = async (req, res) => {
 
 export const uploadImages = (req, res) => {
     return res.json(req.files.map(v => v.location));
+}
+
+export const removeImage = async (req, res, next) => {
+  const {
+    params: { fileName }
+  } = req;
+  const param = {
+    Bucket: 'kohubi-blog/images',
+    Key: fileName
+  };
+  const result = await removeMulterImage(param);
+  return res.status(200).json(result);
 }
 
 // Add Comment

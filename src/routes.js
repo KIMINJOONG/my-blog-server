@@ -11,7 +11,8 @@ const BOARDLIST = "/";
 const BOARDDETAIL = "/:id";
 const BOARDDELETE = "/:id";
 const BOARDUPDATE = "/:id";
-const UPLOADIMAGES = '/images';
+const IMAGES = '/images';
+const REMOVEIMAGE = '/image/:fileName';
 const COMMENT = '/:id/comment';
 
 // USER
@@ -28,7 +29,8 @@ const routes = {
   boardDetail: BOARDDETAIL,
   boardDelete: BOARDDELETE,
   boardUpdate: BOARDUPDATE,
-  uploadImages: UPLOADIMAGES,
+  images: IMAGES,
+  removeImage: REMOVEIMAGE,
   user: USER,
   userJoin: USERJOIN,
   userLogin: USERLOGIN,
