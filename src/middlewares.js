@@ -9,10 +9,18 @@ const s3 = new aws.S3({
     region: "ap-northeast-3"
 });
 
-const multerImages = multer({
+export const multerImages = multer({
     storage: multerS3({
         s3,
         acl: "public-read",
-        bucket: "kohubi-blog/video"
+        bucket: "kohubi-blog/images"
+    })
+});
+
+export const multerVideos = multer({
+    storage: multerS3({
+        s3,
+        acl: "public-read",
+        bucket: "kohubi-blog/videos"
     })
 });

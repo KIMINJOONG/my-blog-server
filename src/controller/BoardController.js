@@ -12,7 +12,7 @@ export const postUpload = async (req, res) => {
       title,
       content,
       category,
-      fileUrl
+      fileUrls
     },
   } = req;
   try{
@@ -21,9 +21,9 @@ export const postUpload = async (req, res) => {
       content,
       category,
     });
-    if(fileUrl){
-      if(Array.isArray(fileUrl)){
-        const images = await Promise.all(fileUrl.map(async (image) => {
+    if(fileUrls){
+      if(Array.isArray(fileUrls)){
+        const images = await Promise.all(fileUrls.map(async (image) => {
           const newImage = await Image.create({ src : image });
           newBoard.images.push(newImage.id);
           return newImage
@@ -32,7 +32,7 @@ export const postUpload = async (req, res) => {
           newBoard.save();
         }
       } else {
-        const image = await Image.create({ src: fileUrl });
+        const image = await Image.create({ src: fileUrls });
         newBoard.images.push(image.id);
         newBoard.save();
       }
@@ -59,40 +59,62 @@ export const getDetail = async (req, res) => {
   const {
     params: { id }
   } = req;
-  const boardDetail = await Board.findById(id).populate('images').populate([
-    {
-      path: 'comments',
-      populate: [{
-        path: 'creator',
-        model: 'User',
-        select: ['id']
-      }]
-    },
-  ]);
-
-  return res.status(200).json(boardDetail);
+  try {
+    const boardDetail = await Board.findById(id).populate('images').populate([
+      {
+        path: 'comments',
+        populate: [{
+          path: 'creator',
+          model: 'User',
+          select: ['id']
+        }]
+      },
+    ]);
+    return res.status(200).json(boardDetail);
+  }catch(error) {
+    console.error(error);
+    return res.status(500).send('게시글 상세 서버 오류');
+  }
 };
 
 export const boardDelete = async (req, res) => {
   const {
     params: { id }
   } = req;
-  await Board.findOneAndRemove({ _id: id });
-  res.status(200).json("success");
+  try {
+    const fullBoard = await Board.findById(id).populate('images');
+    await Board.findOneAndRemove({ _id : id });
+    fullBoard.images.map( async image => {
+      await Image.findOneAndRemove({ _id : image.id })
+    });
+    return res.status(200).json("success");
+  }catch(error) {
+    console.error(error);
+    return res.status(500).send('서버 오류');
+  }
 };
 
 export const boardUpdate = async (req, res) => {
   const {
     params: { id },
-    body: { title, content, category }
+    body: { 
+      title, 
+      content, 
+      category 
+    },
   } = req;
-  await Board.findOneAndUpdate({ _id: id }, { title, content,  category });
-  res.status(200).json("success");
+  try {
+    await Board.findOneAndUpdate({ _id: id }, { title, content,  category });
+    return res.status(200).json("success");
+  }catch(error) {
+    console.error(error);
+    return res.status(500).send('게시글 수정 서버 오류');
+  }
 };
 
 
 export const uploadImages = (req, res) => {
-    return res.json(req.files.map(v => v.filename));
+    return res.json(req.files.map(v => v.location));
 }
 
 // Add Comment

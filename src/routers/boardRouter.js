@@ -12,6 +12,7 @@ import {
 import { isLoggedIn } from "../utils/checkLogin";
 import multer from 'multer';
 import path from 'path';
+import { uploadImage, multerImages } from "../middlewares";
 
 const boardRouter = express.Router();
 // 파일업로드를 위한 multer 설정
@@ -29,12 +30,12 @@ const upload = multer({
   limits: { fileSize: 20 * 1024 * 1024 }, //용량을 제한 현재 최대 20mb 해커들이 서버를 공격못하게 제한해주는게 좋다
 });
 
-boardRouter.post(routes.upload, upload.none(), postUpload);
+boardRouter.post(routes.upload, multerImages.none(), postUpload);
 boardRouter.get(routes.boardList, getList);
 boardRouter.get(routes.boardDetail, getDetail);
 boardRouter.delete(routes.boardDelete, boardDelete);
 boardRouter.put(routes.boardUpdate, boardUpdate);
-boardRouter.post(routes.uploadImages, upload.array('image') ,uploadImages);
+boardRouter.post(routes.uploadImages, multerImages.array('image') ,uploadImages);
 boardRouter.post(routes.comment, isLoggedIn, postAddComment);
 
 export default boardRouter;
