@@ -28,10 +28,9 @@ export const multerVideos = multer({
 export const removeMulterImage = (param) => {
     s3.deleteObject(param, (err, data) => {
         if(err) {
-            console.log(err);
+            console.error(err);
             return err;
         } else {
-            console.log(data);
             return data;
         }
     });

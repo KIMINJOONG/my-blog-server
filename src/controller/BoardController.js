@@ -85,12 +85,15 @@ export const boardDelete = async (req, res) => {
   try {
     const fullBoard = await Board.findById(id).populate('images');
     await Board.findOneAndRemove({ _id : id });
-    // const param = {
-    //   Bucket: 'kohubi-blog/images',
-    //   Key: 'filename'
-    // };
-    // deleteImages()
+    
     fullBoard.images.map( async image => {
+      let fileName = image.src.split('images/');
+      fileName = fileName[1];
+      const param = {
+        Bucket: 'kohubi-blog/images',
+        Key: fileName
+      };
+      await removeMulterImage(param);
       await Image.findOneAndRemove({ _id : image.id })
     });
     return res.status(200).json("success");
