@@ -16,10 +16,13 @@ export const userJoin = async (req, res) => {
       return res.status(401).send("이미 존재하는 아이디입니다.");
     }
     const hashedPassword = await savePassword(password);
-    await User.create({
+    const loginUser = await User.create({
       id,
       password: hashedPassword
     });
+    if(!loginUser) {
+      return res.status(401).send('비밀번호가 틀렸습니다.');
+    }
     return res.status(200).json({ok : true});
   }catch(error) {
     console.error(error);
