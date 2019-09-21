@@ -1,6 +1,5 @@
 import User from "../models/User";
-import { savePassword, comparePassword } from "../utils/password";
-import createJWT from "../utils/createJWT";
+import { savePassword } from "../utils/password";
 import passport from 'passport';
 
 export const userJoin = async (req, res) => {

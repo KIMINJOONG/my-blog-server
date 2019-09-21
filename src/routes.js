@@ -20,7 +20,7 @@ const USER = "/user";
 const USERJOIN = "/";
 const USERLOGIN = "/login";
 const USERLOGOUT = '/logout';
-const LOADUSER = '/detail';
+const LOADUSER = '/';
 
 const routes = {
   board: BOARD,
