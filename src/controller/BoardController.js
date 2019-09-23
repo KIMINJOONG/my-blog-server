@@ -1,5 +1,6 @@
 import Board from "../models/Board";
 import Image from "../models/Image";
+import Video from '../models/Video';
 import Comment from "../models/Comment";
 import { deleteImages, removeMulterImage } from "../middlewares";
 
@@ -13,7 +14,8 @@ export const postUpload = async (req, res) => {
       title,
       content,
       category,
-      fileUrls
+      fileUrls,
+      videoUrl,
     },
   } = req;
   try{
@@ -37,6 +39,13 @@ export const postUpload = async (req, res) => {
         newBoard.images.push(image.id);
         newBoard.save();
       }
+    }
+
+    // 테스트 요망
+    if(videoUrl) {
+      const video = await Video.create({ src: videoUrl });
+      newBoard.video = videoUrl;
+      newBoard.save();
     }
     res.status(200).json(newBoard);
   }catch(e){

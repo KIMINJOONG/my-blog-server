@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { mongo } from "mongoose";
 
 const BoardSchema = new mongoose.Schema({
   title: {
@@ -23,7 +23,12 @@ const BoardSchema = new mongoose.Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Image"
     }
-  ]
+  ],
+  videos: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Video"    
+  }
+  
 });
 
 const model = mongoose.model("Board", BoardSchema);
