@@ -17,13 +17,13 @@ export const multerImages = multer({
     })
 });
 
-export const multerVideos = multer({
-    storage: multerS3({
-        s3,
-        acl: "public-read",
-        bucket: "kohubi-blog/videos"
-    })
-});
+// export const multerVideo = multer({
+//     storage: multerS3({
+//         s3,
+//         acl: "public-read",
+//         bucket: "kohubi-blog/videos"
+//     })
+// });
 
 export const removeMulterImage = (param) => {
     s3.deleteObject(param, (err, data) => {

@@ -126,6 +126,7 @@ export const uploadImages = (req, res) => {
     return res.json(req.files.map(v => v.location));
 }
 
+
 export const removeImage = async (req, res, next) => {
   const {
     params: { fileName }

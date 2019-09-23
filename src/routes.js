@@ -12,6 +12,7 @@ const BOARDDETAIL = "/:id";
 const BOARDDELETE = "/:id";
 const BOARDUPDATE = "/:id";
 const IMAGES = '/images';
+const VIDEO = '/video';
 const REMOVEIMAGE = '/image/:fileName';
 const COMMENT = '/:id/comment';
 
@@ -30,6 +31,7 @@ const routes = {
   boardDelete: BOARDDELETE,
   boardUpdate: BOARDUPDATE,
   images: IMAGES,
+  video: VIDEO,
   removeImage: REMOVEIMAGE,
   user: USER,
   userJoin: USERJOIN,
