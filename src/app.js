@@ -18,7 +18,11 @@ dotenv.config();
 passportConfig();
 const app = express();
 app.use(helmet());
-app.use(morgan("dev"));
+if(process.env.PRODUCTION) {
+  app.use(morgan("combined"));
+} else {
+  app.use(morgan("dev"));
+}
 app.use('/', express.static('./src/uploads'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
