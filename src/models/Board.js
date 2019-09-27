@@ -7,6 +7,9 @@ const BoardSchema = new mongoose.Schema({
   content: {
     type: String
   },
+  videoUrl : {
+    type: String
+  },
   category: Number,
   createdAt: {
     type: Date,
@@ -24,11 +27,6 @@ const BoardSchema = new mongoose.Schema({
       ref: "Image"
     }
   ],
-  videos: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Video"    
-  }
-  
 });
 
 const model = mongoose.model("Board", BoardSchema);
