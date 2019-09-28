@@ -81,9 +81,7 @@ export const postLogin = async (req, res, next) => {
 };
 
 export const loadUser = async (req, res) => {
-  console.log('loadUser들어옴');
   const user = req.user;
-  console.log('user', user);
   if(user) {
     const filteredUser = Object.assign({}, user.toJSON());
     delete filteredUser.password;

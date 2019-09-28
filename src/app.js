@@ -19,7 +19,7 @@ passportConfig();
 const app = express();
 app.use(helmet());
 if(process.env.PRODUCTION) {
-  app.use(morgan("combined"));
+  app.use(morgan("dev"));
 } else {
   app.use(morgan("dev"));
 }
@@ -38,7 +38,7 @@ app.use(
       secret: process.env.COOKIE_SECRET,
       cookie: {
         httpOnly: true,
-        secure: false //https를 쓸때 true
+        secure: true //https를 쓸때 true
       },
     })
   );
