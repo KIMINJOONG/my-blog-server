@@ -13,23 +13,28 @@ import homeRouter from "./routers/homeRouter";
 import passportConfig from './passport';
 import passport from 'passport';
 
-
 dotenv.config();
 passportConfig();
 const app = express();
-app.use(helmet());
-if(process.env.PRODUCTION) {
-  app.use(morgan("dev"));
+const prod = process.env.PRODUCTION;
+
+if (prod) {
+  app.use(morgan('combined'));
+  app.use(cors({
+    origin: /kohubi\.me$/,
+    credentials: true,
+  }));
 } else {
-  app.use(morgan("dev"));
+  app.use(morgan('dev'));
+  app.use(cors({
+    origin: true,
+    credentials: true,
+  }));
 }
+app.use(helmet());
 app.use('/', express.static('./src/uploads'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({
-    origin: true,
-    credentials: true
-}));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
     expressSession({
@@ -37,9 +42,9 @@ app.use(
       saveUninitialized: false,
       secret: process.env.COOKIE_SECRET,
       cookie: {
-        domain: '.kohubi.me',
         httpOnly: true,
-        secure: true //https를 쓸때 true
+        secure: prod, // https를 쓸 때 true
+        domain: prod && '.kohubi.me',
       },
     })
   );
