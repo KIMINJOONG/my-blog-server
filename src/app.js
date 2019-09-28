@@ -36,6 +36,7 @@ app.use('/', express.static('./src/uploads'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+app.set('trust proxy', 1); 
 app.use(
     expressSession({
       resave: false,
@@ -44,7 +45,7 @@ app.use(
       cookie: {
         httpOnly: true,
         secure: prod, // https를 쓸 때 true
-        domain: prod && 'kohubi.me',
+        domain: prod ? 'kohubi.me' : 'localhost',
       },
     })
   );
