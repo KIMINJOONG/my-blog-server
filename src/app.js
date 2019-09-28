@@ -44,7 +44,7 @@ app.use(
       cookie: {
         httpOnly: true,
         secure: prod, // https를 쓸 때 true
-        domain: prod && '.kohubi.me:3060',
+        domain: prod && 'https://kohubi.me',
       },
     })
   );
