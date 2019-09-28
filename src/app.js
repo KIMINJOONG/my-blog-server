@@ -37,7 +37,7 @@ app.use(
       saveUninitialized: false,
       secret: process.env.COOKIE_SECRET,
       cookie: {
-        domain: 'kohubi.me',
+        domain: '.kohubi.me',
         httpOnly: true,
         secure: true //https를 쓸때 true
       },
