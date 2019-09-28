@@ -36,7 +36,7 @@ app.use('/', express.static('./src/uploads'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-app.set('trust proxy', 1); 
+app.set('trust proxy', 1); // nginx로 proxy_pass설정을 하여 접근할때 가장 중요! 꼭 추가해주기 안해주면 쿠키안심어짐
 app.use(
     expressSession({
       resave: false,
