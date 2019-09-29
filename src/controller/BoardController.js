@@ -50,12 +50,33 @@ export const postUpload = async (req, res) => {
 
 export const getList = async (req, res) => {
   const { query } = req;
-  if(query.searchValue === 'undefined' || query.searchValue === '') {
-    const boards = await Board.find({});
+  let boards = null;
+  if(query.searchValue === 'undefined' && query.category === 'undefined') {
+    boards = await Board.find({});
     return res.status(200).json(boards);
   }
-  const boards = await Board.find({ title: { $regex: '.*' + query.searchValue + '.*' } });
-  return res.status(200).json(boards);
+  if(query.searchValue !== 'undefined' && query.category !== 'undefined') {
+    boards = await Board.find({
+      $and: [{
+        title: { 
+          $regex: '.*' + query.searchValue + '.*' 
+        }
+      },{
+        category: query.category
+      }]
+    });
+    return res.status(200).json(boards);
+  }
+  if(query.searchValue !== 'undefined') {
+    boards = await Board.find({ title: { $regex: '.*' + query.searchValue + '.*' } });
+    return res.status(200).json(boards);
+  }
+  if(query.category !== 'undefined') {
+    boards = await Board.find({ category: query.category});
+    return res.status(200).json(boards);
+  }
+  return res.status(401).send('게시글 가져오기 에러');
+  
 };
 
 export const getDetail = async (req, res) => {
