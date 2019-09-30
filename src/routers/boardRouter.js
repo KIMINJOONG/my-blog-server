@@ -10,7 +10,7 @@ import {
   postAddComment,
   removeImage
 } from "../controller/BoardController";
-import { isLoggedIn } from "../utils/checkLogin";
+import { isLoggedIn, isNotLoggedIn } from "../utils/checkLogin";
 import multer from 'multer';
 import path from 'path';
 import { uploadImage, multerImages } from "../middlewares";
@@ -31,12 +31,12 @@ const upload = multer({
   limits: { fileSize: 20 * 1024 * 1024 }, //용량을 제한 현재 최대 20mb 해커들이 서버를 공격못하게 제한해주는게 좋다
 });
 
-boardRouter.post(routes.upload, multerImages.none(), postUpload);
+boardRouter.post(routes.upload, isLoggedIn, multerImages.none(), postUpload);
 boardRouter.get(routes.boardDetail, getDetail);
-boardRouter.delete(routes.boardDelete, boardDelete);
-boardRouter.delete(routes.removeImage, removeImage);
-boardRouter.put(routes.boardUpdate, boardUpdate);
-boardRouter.post(routes.images, multerImages.array('image') ,uploadImages);
+boardRouter.delete(routes.boardDelete, isLoggedIn, boardDelete);
+boardRouter.delete(routes.removeImage, isLoggedIn, removeImage);
+boardRouter.put(routes.boardUpdate, isLoggedIn, boardUpdate);
+boardRouter.post(routes.images, isLoggedIn, multerImages.array('image') ,uploadImages);
 boardRouter.post(routes.comment, isLoggedIn, postAddComment);
 
 export default boardRouter;
