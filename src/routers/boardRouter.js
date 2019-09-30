@@ -32,7 +32,6 @@ const upload = multer({
 });
 
 boardRouter.post(routes.upload, multerImages.none(), postUpload);
-boardRouter.get(routes.boardList, getList);
 boardRouter.get(routes.boardDetail, getDetail);
 boardRouter.delete(routes.boardDelete, boardDelete);
 boardRouter.delete(routes.removeImage, removeImage);

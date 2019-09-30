@@ -3,13 +3,14 @@ import helmet from "helmet";
 import morgan from "morgan";
 import boardRouter from "./routers/boardRouter";
 import userRouter from "./routers/userRouter";
+import homeRouter from "./routers/homeRouter";
+import boardsRouter from './routers/boardsRouter';
 import routes from "./routes";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import expressSession from "express-session";
 import cookieParser from "cookie-parser";
-import homeRouter from "./routers/homeRouter";
 import passportConfig from './passport';
 import passport from 'passport';
 
@@ -53,7 +54,8 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(routes.home, homeRouter);
-app.use(routes.board, boardRouter);
+app.use(routes.boards, boardsRouter);
+app.use(routes.board, boardRouter)
 app.use(routes.user, userRouter);
 
 export default app;

@@ -5,9 +5,10 @@ const HOME = '/';
 
 // Board
 
-const BOARD = "/boards";
+const BOARDS = "/boards";
+const BOARD = '/board';
 const UPLOAD = "/";
-const BOARDLIST = "/";
+const BOARDLIST = "/:categoryId";
 const BOARDDETAIL = "/:id";
 const BOARDDELETE = "/:id";
 const BOARDUPDATE = "/:id";
@@ -23,6 +24,7 @@ const USERLOGOUT = '/logout';
 const LOADUSER = '/';
 
 const routes = {
+  boards: BOARDS,
   board: BOARD,
   upload: UPLOAD,
   boardList: BOARDLIST,
