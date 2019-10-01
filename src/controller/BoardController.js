@@ -51,9 +51,13 @@ export const postUpload = async (req, res) => {
 export const getList = async (req, res) => {
   const { query } = req;
   const { params: {categoryId} } = req;
+  const page = query.page ? query.page : 1;
+  const pageNum = query.pageNum ? query.pageNum : 10;
+  const start = (page - 1) * pageNum;
+  const limit = pageNum;
   let boards = null;
   if(query.searchValue === 'undefined') {
-    boards = await Board.find({ category: categoryId });
+    boards = await Board.find({ category: categoryId }).sort({createdAt : 'desc'}).skip(parseInt(start, 10)).limit(parseInt(limit, 10));
     return res.status(200).json(boards);
   }
   if(query.searchValue !== 'undefined') {
@@ -65,7 +69,7 @@ export const getList = async (req, res) => {
       },{
         category: categoryId
       }]
-    });
+    }).sort({createdAt : 'desc'}).skip(parseInt(start, 10)).limit(parseInt(limit, 10));
     return res.status(200).json(boards);
   }
 };
