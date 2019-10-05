@@ -1,11 +1,7 @@
 import express from "express";
 import helmet from "helmet";
 import morgan from "morgan";
-import boardRouter from "./routers/boardRouter";
-import userRouter from "./routers/userRouter";
-import homeRouter from "./routers/homeRouter";
-import boardsRouter from './routers/boardsRouter';
-import routes from "./routes";
+import apiRoutes from './api';
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
@@ -53,9 +49,6 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(routes.home, homeRouter);
-app.use(routes.boards, boardsRouter);
-app.use(routes.board, boardRouter)
-app.use(routes.user, userRouter);
+app.use('/api', apiRoutes);
 
 export default app;
