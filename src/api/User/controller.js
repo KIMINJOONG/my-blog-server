@@ -1,6 +1,5 @@
-import User from "../../models/User";
-import { savePassword } from "../../utils/password";
 import passport from 'passport';
+import userService from './service';
 
 export default {
     join: async(req, res) => {
@@ -11,22 +10,11 @@ export default {
             }
           } = req;
           try {
-            const user = await User.findOne({id});
-            if(user) {
-              return res.status(401).send("이미 존재하는 아이디입니다.");
-            }
-            const hashedPassword = await savePassword(password);
-            const loginUser = await User.create({
-              id,
-              password: hashedPassword
-            });
-            if(!loginUser) {
-              return res.status(401).send('비밀번호가 틀렸습니다.');
-            }
-            return res.status(200).json({ok : true});
+            await userService.join(id, password);
+            return res.status(200).json('회원 가입 성공')
           }catch(error) {
             console.error(error);
-            return res.status(500).send('회원가입 서버 오류');
+            return res.status(500).json(error);
           }
     },
     login: async(req, res, next) => {
@@ -59,8 +47,7 @@ export default {
     getUser: async(req, res, next) => {
         const user = req.user;
         if(user) {
-            const filteredUser = Object.assign({}, user.toJSON());
-            delete filteredUser.password;
+          const filteredUser = userService.getUser(user);
             return res.json(filteredUser);
         } else {
             return res.status(401).send('로그인을 재시도하여주세요.');
