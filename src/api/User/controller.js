@@ -47,7 +47,7 @@ export default {
     getUser: async(req, res, next) => {
         const user = req.user;
         if(user) {
-          const filteredUser = userService.getUser(user);
+          const filteredUser = await userService.getUser(user);
             return res.json(filteredUser);
         } else {
             return res.status(401).send('로그인을 재시도하여주세요.');
