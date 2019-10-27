@@ -82,10 +82,18 @@ export default {
       const {
         params: { fileName }
       } = req;
+      const fullFileName = 'https://kohubi-blog.s3.ap-northeast-2.amazonaws.com/images/' + fileName;
+      try {
+        await Image.remove({src : fullFileName});
+      }catch(error) {
+        // 게시글 수정에서 이미지 파일 삭제가 아닌 업로드중 이미지 삭제는 당연히 에러이므로 상관x
+      }
       const param = {
         Bucket: 'kohubi-blog/images',
         Key: fileName
       };
+      
+      
       const result = await removeMulterImage(param);
       return res.status(200).json(result);
     },
