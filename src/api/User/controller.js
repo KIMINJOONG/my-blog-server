@@ -1,5 +1,6 @@
 import passport from 'passport';
 import userService from './service';
+import { responseMessage } from '../../../responseMessage';
 
 export default {
     join: async(req, res) => {
@@ -10,28 +11,26 @@ export default {
             }
           } = req;
           try {
-            await userService.join(id, password);
-            return res.status(200).json('회원 가입 성공')
+            await userService.join(id, password, res);
+            return res.json(responseMessage(true, '회원가입 성공'));
           }catch(error) {
             console.error(error);
-            return res.status(500).json(error);
+            return res.json(error);
           }
     },
     login: async(req, res, next) => {
         passport.authenticate('local', (err, user, info) => {
             if(err) {
-                console.error(err);
-                return next(err);
+                return res.json(responseMessage(false, err));
             }
             if(info) {
-                return res.status(401).send(info.reason);
+                return res.json(responseMessage(false, info.reason));
             }
             return req.login(user, async (err) => { // 세션에다 사용자 정보 저장 (어떻게? serializeUser => passport/index.js)
                 if(err) {
-                    console.error(err);
-                    return next(err);
+                    return res.json(responseMessage(false, err));
                 }
-                return res.json(user);
+                return res.json(responseMessage(true, '', user));
             });
           })(req, res, next);
     },
@@ -39,16 +38,16 @@ export default {
         if(req.isAuthenticated()) {
             req.logout();
             req.session.destroy();
-            return res.status(200).send('로그아웃 되었습니다.');
+            return res.json(responseMessage(true, '로그아웃 되었습니다.'));
           } else {
-            return res.status(401).send('로그인이 되지 않았습니다.');
+            return res.json(responseMessage(true, '로그아웃을 실패하였습니다.'));
           }
     },
     getUser: async(req, res, next) => {
         const user = req.user;
         if(user) {
           const filteredUser = await userService.getUser(user);
-            return res.json(filteredUser);
+            return res.json(responseMessage(true, '', filteredUser));
         } else {
             return res.status(401).send('로그인을 재시도하여주세요.');
         }
