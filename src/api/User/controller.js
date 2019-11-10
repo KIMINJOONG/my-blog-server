@@ -1,6 +1,6 @@
 import passport from 'passport';
 import userService from './service';
-import { responseMessage } from '../../../responseMessage';
+import { responseMessage } from '../../statusMessage';
 
 export default {
     join: async(req, res) => {

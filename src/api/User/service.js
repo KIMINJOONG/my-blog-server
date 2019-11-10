@@ -1,6 +1,6 @@
 import { savePassword } from "../../utils/password";
 import User from '../../models/User';
-import { responseMessage } from "../../../responseMessage";
+import { responseMessage } from "../../statusMessage";
 
 export default {
     join: async(id, password, res) => {
