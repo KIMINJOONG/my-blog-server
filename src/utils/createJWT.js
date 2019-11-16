@@ -1,11 +1,11 @@
-import jwt from "jsonwebtoken";
+import jwt from 'jsonwebtoken';
 
 const createJWT = userId => {
   const token = jwt.sign(
     {
-      id: userId
+      id: userId,
     },
-    process.env.JWT_TOKEN || ""
+    process.env.JWT_TOKEN || '',
   );
   return token;
 };

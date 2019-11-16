@@ -1,15 +1,15 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const UserSchema = new mongoose.Schema({
   id: {
-    type: String
+    type: String,
   },
   password: String,
   createdAt: {
     type: Date,
-    default: Date.now()
-  }
+    default: Date.now(),
+  },
 });
 
-const model = mongoose.model("User", UserSchema);
+const model = mongoose.model('User', UserSchema);
 export default model;

@@ -1,25 +1,23 @@
 // Home
 const HOME = '/';
 
-
-
 // Board
 
-const BOARDS = "/boards";
+const BOARDS = '/boards';
 const BOARD = '/board';
-const UPLOAD = "/";
-const BOARDLIST = "/:categoryId";
-const BOARDDETAIL = "/:id";
-const BOARDDELETE = "/:id";
-const BOARDUPDATE = "/:id";
+const UPLOAD = '/';
+const BOARDLIST = '/:categoryId';
+const BOARDDETAIL = '/:id';
+const BOARDDELETE = '/:id';
+const BOARDUPDATE = '/:id';
 const IMAGES = '/images';
 const REMOVEIMAGE = '/image/:fileName';
 const COMMENT = '/:id/comment';
 
 // USER
-const USER = "/user";
-const USERJOIN = "/";
-const USERLOGIN = "/login";
+const USER = '/user';
+const USERJOIN = '/';
+const USERLOGIN = '/login';
 const USERLOGOUT = '/logout';
 const LOADUSER = '/';
 
@@ -39,7 +37,7 @@ const routes = {
   userLogout: USERLOGOUT,
   loadUser: LOADUSER,
   home: HOME,
-  comment: COMMENT
+  comment: COMMENT,
 };
 
 export default routes;

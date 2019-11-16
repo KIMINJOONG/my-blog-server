@@ -1,33 +1,33 @@
-import mongoose, { mongo } from "mongoose";
+import mongoose, { mongo } from 'mongoose';
 
 const BoardSchema = new mongoose.Schema({
   title: {
-    type: String
+    type: String,
   },
   content: {
-    type: String
+    type: String,
   },
-  videoUrl : {
-    type: String
+  videoUrl: {
+    type: String,
   },
   category: Number,
   createdAt: {
     type: Date,
-    default: Date.now()
+    default: Date.now(),
   },
   comments: [
     {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment"
-    }
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Comment',
+    },
   ],
   images: [
     {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Image"
-    }
+      ref: 'Image',
+    },
   ],
 });
 
-const model = mongoose.model("Board", BoardSchema);
+const model = mongoose.model('Board', BoardSchema);
 export default model;
