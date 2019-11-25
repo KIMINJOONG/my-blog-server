@@ -1,8 +1,8 @@
 import Board from '../../models/Board';
 import Image from '../../models/Image';
-import Comment from '../../models/Comment';
+import { responseMessage } from '../../statusMessage';
 export default {
-  insertBoard: async (title, content, category, fileUrls, videoUrl) => {
+  insertBoard: async (title, content, category, fileUrls, videoUrl, res) => {
     try {
       const newBoard = await Board.create({
         title,
@@ -31,20 +31,23 @@ export default {
       return newBoard;
     } catch (e) {
       console.error(e);
-      next(e);
+      return res
+        .stauts(400)
+        .json(responseMessage(false, '게시글 등록중 서비스에서 에러발생'));
     }
   },
-  updateBoard: async (title, content, category, videoUrl, id) => {
+  updateBoard: async (title, content, category, videoUrl, id, res) => {
     try {
       await Board.findOneAndUpdate(
         { _id: id },
         { title, content, category, videoUrl },
       );
     } catch (error) {
-      throw Error(error);
+      console.error(error);
+      return res.stauts(400).json(responseMessage(false, '게시글 수정중 에러'));
     }
   },
-  deleteBoard: async id => {
+  deleteBoard: async (id, res) => {
     try {
       const fullBoard = await Board.findById(id).populate('images');
       await Board.findOneAndRemove({ _id: id });
@@ -60,7 +63,7 @@ export default {
         await Image.findOneAndRemove({ _id: image.id });
       });
     } catch (error) {
-      throw Error(error);
+      return res.status(400).json(responseMessage(false, '게시글 삭제중 에러'));
     }
   },
   getBoard: async id => {

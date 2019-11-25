@@ -3,6 +3,7 @@ import Image from '../../models/Image';
 import Comment from '../../models/Comment';
 import { removeMulterImage } from '../../middlewares';
 import boardService from './service';
+import { responseMessage } from '../../statusMessage';
 
 export default {
   uploadBoard: async (req, res) => {
@@ -16,11 +17,15 @@ export default {
         category,
         fileUrls,
         videoUrl,
+        res,
       );
-      res.status(200).json(newBoard);
+      console.log(newBoard);
+      return res.status(200).json(responseMessage(true));
     } catch (e) {
       console.error(e);
-      next(e);
+      return res
+        .status(401)
+        .json(responseMessage(false, '게시글 등록 에러발생'));
     }
   },
   updateBoard: async (req, res, next) => {
@@ -29,10 +34,17 @@ export default {
       body: { title, content, category, videoUrl },
     } = req;
     try {
-      await boardService.updateBoard(title, content, category, videoUrl, id);
-      return res.status(200).json('수정완료');
+      await boardService.updateBoard(
+        title,
+        content,
+        category,
+        videoUrl,
+        id,
+        res,
+      );
+      return res.status(200).json(responseMessage(true));
     } catch (error) {
-      return res.status(500).json(error);
+      return res.status(400).json(responseMessage(false, error));
     }
   },
   deleteBoard: async (req, res, next) => {
@@ -40,10 +52,10 @@ export default {
       params: { id },
     } = req;
     try {
-      await boardService.deleteBoard(id);
-      return res.status(200).json('success');
+      await boardService.deleteBoard(id, res);
+      return res.status(200).json(responseMessage(true));
     } catch (error) {
-      return res.status(500).json(error);
+      return res.status(400).json(responseMessage(false, error));
     }
   },
   getBoard: async (req, res, next) => {
